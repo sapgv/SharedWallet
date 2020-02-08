@@ -11,19 +11,28 @@ import RealmSwift
 
 protocol WalletsViewModelInput {
     
+    var navigator: WalletsNaviagtorInput! { get set }
     var wallets: [Wallet] { get }
+    func create()
     
 }
 
 class WalletsViewModel: WalletsViewModelInput {
     
+    var navigator: WalletsNaviagtorInput!
     private var realm = try! Realm()
+    
+    init(navigator: WalletsNaviagtorInput) {
+        self.navigator = navigator
+    }
     
     var wallets: [Wallet] {
         return Array(realm.objects(Wallet.self))
     }
     
-    
+    func create() {
+        navigator.create()
+    }
     
     
 }

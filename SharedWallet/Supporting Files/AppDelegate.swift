@@ -15,20 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        let walletsViewModel = WalletsViewModel()
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        
-        let walletsCollectionViewController = WalletsCollectionViewController(collectionViewLayout: layout)
-        walletsCollectionViewController.viewModel = walletsViewModel
-        
-        let navigationController = UINavigationController(rootViewController: walletsCollectionViewController)
-        
+
         let window = UIWindow(frame: UIScreen.main.bounds)
-        window.makeKeyAndVisible()
-        
-        window.rootViewController = navigationController
+        Application.shared.configure(in: window)
         
         self.window = window
         return true

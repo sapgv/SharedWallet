@@ -9,7 +9,7 @@
 import Realm
 import RealmSwift
 
-class Wallet: Object {
+class Wallet: Object, PickerElement {
     
     @objc dynamic var name: String = ""
     @objc dynamic var currency: Currency? = nil

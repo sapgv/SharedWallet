@@ -20,8 +20,14 @@ class AddWalletViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        tableView.register(cellTypes: [.Title, .Edit, .Picker])
     }
 
+    deinit {
+        print("deinit \(type(of: self))")
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -34,16 +40,30 @@ class AddWalletViewController: UITableViewController {
         return viewModel.sections[section].rows.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        
+        let row = viewModel.sections[indexPath.section].rows[indexPath.row]
+        
+        let cell = tableView.deque(row: row, indexPath: indexPath)
+        if let cell = cell as? TitleCell {
+            cell.setup(for: row)
+        }
+        else if let cell = cell as? EditCell, let row = row as? EditRow {
+            cell.setup(for: row)
+        }
+        else if let cell = cell as? PickerCell, let row = row as? PickerRow<Currency> {
+            cell.setup(for: row.object, with: row.items)
+            cell.setupTextField()
+        }
+        
         return cell
     }
-    */
+    
 
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return viewModel.sections[indexPath.section].rows[indexPath.row].height
+    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

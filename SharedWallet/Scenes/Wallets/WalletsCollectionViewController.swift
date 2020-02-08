@@ -29,6 +29,10 @@ class WalletsCollectionViewController: UICollectionViewController {
         setupNavigationButton()
     }
     
+    deinit {
+        print("deinit \(type(of: self))")
+    }
+    
     private func setupCollectionView() {
         
         collectionView.refreshControl = UIRefreshControl()
@@ -48,7 +52,7 @@ class WalletsCollectionViewController: UICollectionViewController {
     @objc
     private func addWallet() {
         
-        print("add")
+        viewModel.create()
         
     }
     /*
